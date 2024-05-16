@@ -3,12 +3,11 @@ import 'package:find_me_admin/firebase/fire_store.dart';
 import 'package:find_me_admin/models/posts..dart';
 import 'package:find_me_admin/models/users.dart';
 import 'package:find_me_admin/screens/posts/photo_view.dart';
-
+import 'package:find_me_admin/screens/posts/posts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class PostDetailsScreen extends StatefulWidget {
   const PostDetailsScreen({super.key, required this.postModel});
@@ -59,12 +58,6 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Future<void> _launchInBrowserView(Uri url) async {
-      if (!await launchUrl(url, mode: LaunchMode.inAppBrowserView)) {
-        throw Exception('Could not launch $url');
-      }
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Post Details"),
@@ -208,6 +201,56 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                                   },
                                   child: Text(
                                     "Reject",
+                                    style: TextStyle(color: Colors.white),
+                                  )),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.black),
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: Text("Alert"),
+                                          content: Text("Delete this post ?"),
+                                          actions: [
+                                            ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                    foregroundColor:
+                                                        Colors.white,
+                                                    backgroundColor:
+                                                        Colors.red),
+                                                onPressed: () {
+                                                  FireData()
+                                                      .deletePost(
+                                                          widget.postModel.id)
+                                                      .then((value) => Navigator
+                                                          .pushAndRemoveUntil(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        PostsScreen(),
+                                                              ),
+                                                              (route) =>
+                                                                  false));
+                                                },
+                                                child: Text("yes")),
+                                            ElevatedButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text("no")),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Text(
+                                    "Delete",
                                     style: TextStyle(color: Colors.white),
                                   )),
                             ],

@@ -32,34 +32,73 @@ class _PostsScreenState extends State<PostsScreen> {
         padding: EdgeInsets.all(20),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      status = 'Pending'.toLowerCase();
-                    });
-                  },
-                  child: Text("Pending"),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      status = 'Approved'.toLowerCase();
-                    });
-                  },
-                  child: Text("Approved"),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      status = 'Rejected'.toLowerCase();
-                    });
-                  },
-                  child: Text("Rejected"),
-                ),
-              ],
+            SearchBar(
+              leading: Icon(Icons.search),
+              hintText: "search",
+              controller: searchCon,
+              onChanged: (value) {
+                setState(() {
+                  searchCon.text = value;
+                });
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              height: 70,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.all(10),
+
+                //      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        status = '';
+                      });
+                    },
+                    child: Text("all"),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        status = 'Pending'.toLowerCase();
+                      });
+                    },
+                    child: Text("Pending"),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        status = 'Approved'.toLowerCase();
+                      });
+                    },
+                    child: Text("Approved"),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        status = 'Rejected'.toLowerCase();
+                      });
+                    },
+                    child: Text("Rejected"),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                ],
+              ),
             ),
             Expanded(
               child: StreamBuilder(
@@ -71,9 +110,16 @@ class _PostsScreenState extends State<PostsScreen> {
                   if (snapshot.hasData) {
                     List<PostModel> item = snapshot.data!.docs
                         .map((e) => PostModel.fromJson(e.data()))
-                        .where((element) => element.status == status)
+                        .where((element) =>
+                            status != "" ? element.status == status : true)
                         .toList();
-
+                    searchCon.text != ''
+                        ? item = item
+                            .where((element) =>
+                                element.description.contains(searchCon.text) ||
+                                element.title.contains(searchCon.text))
+                            .toList()
+                        : null;
                     if (item.isNotEmpty) {
                       return ListView.builder(
                         shrinkWrap: true,

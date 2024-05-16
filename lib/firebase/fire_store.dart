@@ -8,4 +8,8 @@ class FireData {
   }) async {
     await firestore.collection('posts').doc(postId).update({'status': status});
   }
+
+  Future deletePost(String postId) async {
+    await firestore.collection('posts').doc(postId).delete();
+  }
 }

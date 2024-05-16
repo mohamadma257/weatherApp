@@ -12,14 +12,7 @@ class LayoutApp extends StatefulWidget {
 }
 
 class _LayoutAppState extends State<LayoutApp> {
-  @override
-  void initState() {
-    // TODO: implement initState
-
-    super.initState();
-  }
-
-  signout() async {
+  Future signout() async {
     await Future.delayed(const Duration(seconds: 5))
         .then((value) => FirebaseAuth.instance.signOut());
   }
