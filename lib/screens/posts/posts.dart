@@ -54,45 +54,82 @@ class _PostsScreenState extends State<PostsScreen> {
                 //      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            status == '' ? Colors.blue : Colors.white),
                     onPressed: () {
                       setState(() {
                         status = '';
                       });
                     },
-                    child: Text("all"),
+                    child: Text(
+                      "all",
+                      style: TextStyle(
+                          color: status != '' ? Colors.blue : Colors.white),
+                    ),
                   ),
                   SizedBox(
                     width: 10,
                   ),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: status == 'Pending'.toLowerCase()
+                            ? Colors.blue
+                            : Colors.white),
                     onPressed: () {
                       setState(() {
                         status = 'Pending'.toLowerCase();
                       });
                     },
-                    child: Text("Pending"),
+                    child: Text(
+                      "Pending",
+                      style: TextStyle(
+                          color: status != 'Pending'.toLowerCase()
+                              ? Colors.blue
+                              : Colors.white),
+                    ),
                   ),
                   SizedBox(
                     width: 10,
                   ),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: status == 'Approved'.toLowerCase()
+                            ? Colors.blue
+                            : Colors.white),
                     onPressed: () {
                       setState(() {
                         status = 'Approved'.toLowerCase();
                       });
                     },
-                    child: Text("Approved"),
+                    child: Text(
+                      "Approved",
+                      style: TextStyle(
+                          color: status != 'Approved'.toLowerCase()
+                              ? Colors.blue
+                              : Colors.white),
+                    ),
                   ),
                   SizedBox(
                     width: 10,
                   ),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: status == 'Rejected'.toLowerCase()
+                            ? Colors.blue
+                            : Colors.white),
                     onPressed: () {
                       setState(() {
                         status = 'Rejected'.toLowerCase();
                       });
                     },
-                    child: Text("Rejected"),
+                    child: Text(
+                      "Rejected",
+                      style: TextStyle(
+                          color: status != 'Rejected'.toLowerCase()
+                              ? Colors.blue
+                              : Colors.white),
+                    ),
                   ),
                   SizedBox(
                     width: 10,

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:find_me_admin/screens/feedback.dart';
 
 import 'package:find_me_admin/screens/posts/posts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,7 +28,16 @@ class _LayoutAppState extends State<LayoutApp> {
               onPressed: () async {
                 await FirebaseAuth.instance.signOut();
               },
-              icon: Icon(Icons.logout))
+              icon: Icon(Icons.logout)),
+          IconButton(
+              onPressed: () async {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => FeedBackScreen(),
+                    ));
+              },
+              icon: Icon(Icons.feedback)),
         ],
       ),
       body: StreamBuilder(
